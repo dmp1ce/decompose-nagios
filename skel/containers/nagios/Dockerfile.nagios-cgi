@@ -9,7 +9,7 @@ RUN apt-get update -yq && apt-get install -yq --no-install-recommends \
 
   # Copy nagios Apache configuration.
   cp /app/httpd/httpd.conf /etc/apache2/conf-available/nagios.conf && \
-  a2enconf nagios && a2enmod cgi && usermod -G nagios -a www-data
+  a2enconf nagios && a2enmod cgi && usermod -G nagios -a www-data && \
 
   # Clean up system from install
   apt-get autoremove -y && \
