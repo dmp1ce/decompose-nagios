@@ -1,0 +1,21 @@
+FROM nagios-base
+MAINTAINER David Parrish <daveparrish@tutanota.com>
+
+# Install httpd
+RUN apt-get update -yq && apt-get install -yq --no-install-recommends \
+  apache2 \
+  php5-common \
+  libapache2-mod-php5 && \
+
+  # Copy nagios Apache configuration.
+  cp /app/httpd/httpd.conf /etc/apache2/conf-available/nagios.conf && \
+  a2enconf nagios && a2enmod cgi && usermod -G nagios -a www-data
+
+  # Clean up system from install
+  apt-get autoremove -y && \
+  apt-get clean -y && \
+  rm -rvf /var/lib/apt/lists/* && \
+  rm -rvf /var/tmp/* && \
+  rm -rvf /tmp/*
+
+# vi: set tabstop=2 expandtab:

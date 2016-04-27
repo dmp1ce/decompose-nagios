@@ -1,0 +1,21 @@
+nagios-core:
+  dockerfile: Dockerfile.nagios-core
+  build: containers/nagios/.
+  volumes:
+    - ./containers/nagios/etc:/usr/local/nagios/etc
+    - nagios_var:/usr/local/nagios/var
+    - nagios_ssh_config:/home/nagios/.ssh
+  command: /usr/local/nagios/bin/nagios /usr/local/nagios/etc/nagios.cfg
+nagios-cgi:
+  dockerfile: Dockerfile.nagios-cgi
+  build: containers/nagios/.
+  volumes:
+    - ./containers/nagios/etc:/usr/local/nagios/etc
+    - nagios_var:/usr/local/nagios/var
+  command: apache2ctl -DFOREGROUND
+  ports:
+    - 80
+#nagios-api:
+#  build: 
+
+# vi: set tabstop=2 expandtab syntax=yaml:

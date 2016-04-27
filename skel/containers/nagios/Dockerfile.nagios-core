@@ -1,0 +1,7 @@
+FROM nagios-base
+MAINTAINER David Parrish <daveparrish@tutanota.com>
+
+# Set user to nagios
+USER nagios
+
+# vi: set tabstop=2 expandtab:
