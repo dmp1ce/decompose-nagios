@@ -13,7 +13,10 @@ Environment intended to be used with the Decompose utility to easily start a new
 ```bash
 # Initialize environment
 decompose --init https://github.com/dmp1ce/decompose-nagios.git
+
+# Build project and start project
 decompose build
+decompose up
 
 # See nagios core and nagios cgi running
 docker-compose ps
