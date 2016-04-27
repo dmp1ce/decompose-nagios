@@ -1,0 +1,79 @@
+DECOMPOSE_PROCESSES=( 'build' 'verify-nagios-config' 'up' 'stop' 'restart-nagios' )
+
+
+_decompose-process-restart-nagios() {
+  # Get the nagios container id.
+  local cid;
+  cid=$(docker-compose ps -q nagios-core)
+
+  # Make sure there wasn't an error fetching nagios-core cid.
+  local error_code=$?
+  [ "$error_code" -gt 0 ] && \
+    echo "Error occured getting nagios container id." && \
+    echo "Is the nagios-core container running?" && \
+    return $error_code
+
+
+  # Run the verification command in container.
+  docker exec $cid kill -HUP 1
+}
+_decompose-process-restart-nagios_help() {
+  echo "  Restart nagios and reload configuration."
+}
+
+_decompose-process-verify-nagios-config() {
+  # Get the nagios container id.
+  local cid;
+  cid=$(docker-compose ps -q nagios-core)
+
+  # Make sure there wasn't an error fetching nagios-core cid.
+  local error_code=$?
+  [ "$error_code" -gt 0 ] && \
+    echo "Error occured getting nagios container id." && \
+    echo "Is the nagios-core container running?" && \
+    return $error_code 
+  
+  # Run the verification command in container.
+  docker exec $cid /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+}
+_decompose-process-test_me_help() {
+  echo "  Verify the current Nagios configuration."
+}
+
+_decompose-process-up() {
+  docker-compose up -d
+}
+_decompose-process-up_help() {
+  echo "  Brings up the nagios monitoring system online."
+}
+
+_decompose-process-stop() {
+  docker-compose stop
+}
+_decompose-process-stop_help() {
+  echo "  Stops the nagios monitoring system."
+}
+
+_decompose-process-build() {
+  decompose-process-templates || return $?
+
+  # Build base
+  docker build -t nagios-base -f $(_decompose-project-root)/containers/nagios/Dockerfile.nagios-base $(_decompose-project-root)/containers/nagios || return $?
+
+  docker-compose build || return $?
+
+  # Prepare nagios var volume
+  docker-compose run -u root --rm nagios-core bash -c \
+"chown nagios:nagios /usr/local/nagios/var && \
+mkdir -p /usr/local/nagios/var/spool/checkresults && \
+chown nagios:nagios /usr/local/nagios/var/spool && \
+chown nagios:nagios /usr/local/nagios/var/spool/checkresults && \
+mkdir -p /usr/local/nagios/var/rw && \
+chown nagios:nagios /usr/local/nagios/var/rw"
+  return $?
+}
+_decompose-process-buildhelp() {
+  echo "  Build project"
+}
+
+# vim:syntax=sh tabstop=2 shiftwidth=2 expandtab

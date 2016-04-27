@@ -1,0 +1,5 @@
+# Set local user/group id
+PROJECT_HOST_USERID="$(id -u)"
+PROJECT_HOST_GROUPID="$(id -g)"
+
+# vim:syntax=sh
