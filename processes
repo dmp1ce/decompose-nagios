@@ -1,5 +1,7 @@
-DECOMPOSE_PROCESSES=( 'build' 'verify-nagios-config' 'up' 'stop' 'restart-nagios' )
+source $(_decompose-project-root)/.decompose/environment/lib/common/processes
 
+DECOMPOSE_PROCESSES=( 'build' 'verify-nagios-config' 'up' 'stop' 'restart-nagios'
+  "${DECOMPOSE_COMMON_PROCESSES[@]}" )
 
 _decompose-process-restart-nagios() {
   # Get the nagios container id.
