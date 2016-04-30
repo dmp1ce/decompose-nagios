@@ -70,8 +70,8 @@ _decompose-process-build() {
 mkdir -p /usr/local/nagios/var/spool/checkresults && \
 chown nagios:nagios /usr/local/nagios/var/spool && \
 chown nagios:nagios /usr/local/nagios/var/spool/checkresults && \
-mkdir -p /usr/local/nagios/var/{rw,rrd} && \
-chown nagios:nagios /usr/local/nagios/var/{rw,rrd}"
+mkdir -p /usr/local/nagios/var/{rw,rrd,archives} && \
+chown nagios:nagios /usr/local/nagios/var/{rw,rrd,archives}"
   return $?
 }
 _decompose-process-buildhelp() {
