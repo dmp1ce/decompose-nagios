@@ -14,8 +14,6 @@ nagios-cgi:
     - nagios_var:/usr/local/nagios/var
   command: apache2ctl -DFOREGROUND
   ports:
-    - 80
-#nagios-api:
-#  build: 
+    - 18888:80
 
 # vi: set tabstop=2 expandtab syntax=yaml:
