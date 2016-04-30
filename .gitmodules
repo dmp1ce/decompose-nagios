@@ -1,3 +1,6 @@
 [submodule "lib/common"]
 	path = lib/common
 	url = https://github.com/dmp1ce/decompose-common.git
+[submodule "lib/docker"]
+	path = lib/docker
+	url = https://github.com/dmp1ce/decompose-docker-common.git
