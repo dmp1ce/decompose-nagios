@@ -2,4 +2,7 @@
 PROJECT_HOST_USERID="$(id -u)"
 PROJECT_HOST_GROUPID="$(id -g)"
 
+# Production by default
+PRODUCTION=true
+
 # vim:syntax=sh

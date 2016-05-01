@@ -1,0 +1,4 @@
+# Turn off production mode
+unset PRODUCTION
+
+# vim:syntax=sh
