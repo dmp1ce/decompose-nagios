@@ -5,4 +5,10 @@ PROJECT_HOST_GROUPID="$(id -g)"
 # Production by default
 PRODUCTION=true
 
+# Timezone
+PROJECT_TIMEZONE="Etc/UTC"
+
+# Allow project elements file to override all elements
+source $(_decompose-project-root)/elements
+
 # vim:syntax=sh
