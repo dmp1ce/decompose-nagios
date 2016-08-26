@@ -39,7 +39,7 @@ _decompose-process-verify-nagios-config() {
   # Run the verification command in container.
   docker exec $cid /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 }
-_decompose-process-test_me_help() {
+_decompose-process-verify-nagios-config_help() {
   echo "  Verify the current Nagios configuration."
 }
 
@@ -75,7 +75,7 @@ mkdir -p /usr/local/nagios/var/{rw,rrd,archives} && \
 chown nagios:nagios /usr/local/nagios/var/{rw,rrd,archives}"
   return $?
 }
-_decompose-process-buildhelp() {
+_decompose-process-build_help() {
   echo "  Build project"
 }
 
