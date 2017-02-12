@@ -62,7 +62,7 @@ _decompose-process-build() {
   decompose-process-templates || return $?
 
   # Build base
-  docker build -t nagios-base -f $(_decompose-project-root)/containers/nagios/Dockerfile.nagios-base $(_decompose-project-root)/containers/nagios || return $?
+  docker build --pull -t nagios-base -f $(_decompose-project-root)/containers/nagios/Dockerfile.nagios-base $(_decompose-project-root)/containers/nagios || return $?
 
   docker-compose build || return $?
 
