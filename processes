@@ -2,7 +2,7 @@ source $(_decompose-project-root)/.decompose/environment/lib/common/processes
 source $(_decompose-project-root)/.decompose/environment/lib/docker/processes
 
 DECOMPOSE_PROCESSES=( 'build' 'verify-nagios-config' 'up' 'stop' 'restart-nagios'
-  'cron'
+  'cron' 'rebuild'
   "${DECOMPOSE_COMMON_PROCESSES[@]}" "${DECOMPOSE_DOCKER_PROCESSES[@]}" )
 
 _decompose-process-restart-nagios() {
@@ -62,7 +62,7 @@ _decompose-process-build() {
   decompose-process-templates || return $?
 
   # Build base
-  docker build --pull -t nagios-base -f $(_decompose-project-root)/containers/nagios/Dockerfile.nagios-base $(_decompose-project-root)/containers/nagios || return $?
+  docker build "$NOCACHE" --pull -t nagios-base -f $(_decompose-project-root)/containers/nagios/Dockerfile.nagios-base $(_decompose-project-root)/containers/nagios || return $?
 
   docker-compose build || return $?
 
@@ -80,6 +80,13 @@ _decompose-process-build_help() {
   echo "  Build project"
 }
 
+_decompose-process-rebuild() {
+  export NOCACHE="--no-cache"
+  _decompose-process-build
+}
+_decompose-process-rebuild_help() {
+  echo "  Rebuild project. Does not use previously built Docker caches."
+}
 
 _decompose-process-cron() {
   echo "Rebuilding the project ..."
